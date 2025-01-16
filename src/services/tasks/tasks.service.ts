@@ -51,7 +51,6 @@ class TasksService {
 
     if (!res) return false;
 
-    // return res.data;
     return true;
   }
 
@@ -67,7 +66,6 @@ class TasksService {
 
     if (!res) return false;
 
-    // return res.data;
     return true;
   }
 }

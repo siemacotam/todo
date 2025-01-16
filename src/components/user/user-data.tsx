@@ -3,25 +3,20 @@
 import Image from "next/image";
 import avatar from "@/assets/avatar.svg";
 import { useUserStore } from "@/stores/user-store";
-import { useRouter } from "next/navigation";
-import { clearAuthDataFromLocalStorage } from "@/services/local-storage";
+import edit from "@/assets/edit.svg";
+import UserDataDialog from "./user-data-dialog";
+import { useAuth } from "@/hooks/useAuth";
 
 interface UserDataProps {
   expanded: boolean;
 }
 
 const UserData = ({ expanded }: UserDataProps) => {
-  const { user, logout } = useUserStore();
-  const router = useRouter();
+  const { user, toggleEditUserDialog, editUserDialog } = useUserStore();
+  const { logOut } = useAuth({ setError: () => {} });
 
   if (!user) return null;
   const { firstName, lastName } = user;
-
-  const logOut = () => {
-    logout();
-    clearAuthDataFromLocalStorage();
-    router.push("/");
-  };
 
   return (
     <div className="flex gap-3">
@@ -38,9 +33,14 @@ const UserData = ({ expanded }: UserDataProps) => {
         />
       </div>
       <div className={`${expanded ? "" : "hidden"} md:flex flex flex-col`}>
-        <p className="text-sm font-medium">
-          {firstName} {lastName}
-        </p>
+        <div className="flex gap-2 items-center">
+          <p className="text-sm font-medium">
+            {firstName} {lastName}
+          </p>
+          <div className="cursor-pointer" onClick={toggleEditUserDialog}>
+            <Image height={12} width={12} src={edit} alt="edit icon" />
+          </div>
+        </div>
         <p
           onClick={logOut}
           className="text-xs text-gray-600 font-medium cursor-pointer hover:underline"
@@ -48,6 +48,7 @@ const UserData = ({ expanded }: UserDataProps) => {
           Log out
         </p>
       </div>
+      {editUserDialog && <UserDataDialog open edit />}
     </div>
   );
 };

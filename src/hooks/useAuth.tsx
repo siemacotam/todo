@@ -1,5 +1,8 @@
 import authService from "@/services/auth/auth.service";
-import { saveAuthDataToLocalStorage } from "@/services/local-storage";
+import {
+  clearAuthDataFromLocalStorage,
+  saveAuthDataToLocalStorage,
+} from "@/services/local-storage";
 import userService from "@/services/user/user.service";
 import { useUserStore } from "@/stores/user-store";
 import axios from "axios";
@@ -12,7 +15,7 @@ interface UseAuthProps {
 
 export const useAuth = ({ setError }: UseAuthProps) => {
   const router = useRouter();
-  const { login, setUser } = useUserStore();
+  const { login, setUser, logout } = useUserStore();
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     const formData = new FormData(e.target as HTMLFormElement);
@@ -68,7 +71,7 @@ export const useAuth = ({ setError }: UseAuthProps) => {
 
         if (userData) {
           login(userData);
-          router.push("list");
+          router.push("fill-page");
         }
       }
     } catch (error) {
@@ -114,5 +117,12 @@ export const useAuth = ({ setError }: UseAuthProps) => {
     }
   };
 
-  return { handleLogin, handleRegister, handleUpdateUserData };
+  const logOut = async () => {
+    await authService.logout();
+    logout();
+    clearAuthDataFromLocalStorage();
+    router.push("/");
+  };
+
+  return { handleLogin, handleRegister, handleUpdateUserData, logOut };
 };

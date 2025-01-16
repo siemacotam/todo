@@ -40,7 +40,6 @@ class PocketsService {
 
     if (!res) return false;
 
-    // return res.data;
     return true;
   }
 
@@ -51,7 +50,6 @@ class PocketsService {
 
     if (!res) return false;
 
-    // return res.data;
     return true;
   }
 }
