@@ -22,7 +22,9 @@ export const AuthCheck = ({ children }: { children: React.ReactNode }) => {
     const checkAuth = async () => {
       const token = getAuthDataFromLocalStorage();
       if (!token || !isTokenValid(token.token)) {
-        router.push("/");
+        if (!pathname.includes("/register")) {
+          router.push("/");
+        }
         setLoading(false);
         return;
       }
