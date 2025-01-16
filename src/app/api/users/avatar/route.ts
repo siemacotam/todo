@@ -23,7 +23,14 @@ export async function PUT(request: NextRequest) {
       message: "Avatar updated successfully",
     });
   } catch (error) {
-    console.log("Error in update avatar route:", error);
+    if (axios.isAxiosError(error)) {
+      return NextResponse.json(
+        { success: false, message: error.response?.data.message || "Error" },
+        { status: 500 }
+      );
+    } else {
+      console.log("Error in get avatar route:", error);
+    }
     return NextResponse.json(
       { success: false, message: "Internal server error" },
       { status: 500 }
