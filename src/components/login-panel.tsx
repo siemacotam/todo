@@ -15,8 +15,10 @@ interface LoginPanelProps {
 const LoginPanel = ({ registerPage }: LoginPanelProps) => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
   const { handleLogin, handleRegister } = useAuth({ setError });
   const { isLoggedIn } = useUserStore();
+
   const router = useRouter();
 
   useEffect(() => {

@@ -1,7 +1,6 @@
-import Actions from "@/components/actions";
-import Tasks from "@/components/tasks";
-import UserDataDialog from "@/components/user/user-data-dialog";
-import PocketSection from "@/components/pockets-section";
+import AddTaskButton from "@/components/buttons/add-task-button";
+import Tasks from "@/components/tasks/tasks";
+import PocketSection from "@/components/pockets/pockets-section";
 
 const ListPage = () => {
   return (
@@ -10,8 +9,7 @@ const ListPage = () => {
         <PocketSection />
       </div>
       <Tasks />
-      <Actions />
-      <UserDataDialog />
+      <AddTaskButton />
     </div>
   );
 };
