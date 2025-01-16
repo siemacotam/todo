@@ -41,8 +41,10 @@ const UserDataDialog = ({ open, edit }: UserDataDialogProps) => {
 
     if (pathname.includes("/fill-page")) {
       router.push("/list");
+    } else {
+      toggleEditUserDialog();
     }
-    toggleEditUserDialog();
+
     setLoading(false);
   };
 
